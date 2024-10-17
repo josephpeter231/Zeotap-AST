@@ -1,6 +1,6 @@
-# Django Blog Application
+# Rule Engine with AST
 
-This is a simple blog application built using Django. It provides features to create, read, update, and delete blog posts. The application also includes a REST API for managing blog posts using Django Rest Framework (DRF).
+The Rule Engine Application dynamically evaluates user eligibility based on attributes like age, department, income, and spending habits. It utilizes an Abstract Syntax Tree (AST) to efficiently create, combine, and modify conditional rules.
 
 # Demonstration Video
 
@@ -8,17 +8,17 @@ This is a simple blog application built using Django. It provides features to cr
 
 ## **Features**
 
-- User authentication for creating, editing, and deleting posts
-- Admin interface for managing posts
-- REST API endpoints for CRUD operations
-- Post listing, detail view, create, edit, and delete functionalities
+- Rule Creation : User will be able to add the rules.
+- Combine two or more rules.
+- Evaluate the rule 
+- storage of each rule in database.
 
 ## **Technologies Used**
-
-- Django
-- Django Rest Framework (DRF)
-- SQLite (default database)
-
+- Programming Language(Python)
+- Flask
+- Database - MongoDB
+- HTML - UI
+- Data Representation : Abstract Syntax Tree (AST)
 ## **Requirements**
 
 - Python 3.8 or later
@@ -28,26 +28,19 @@ This is a simple blog application built using Django. It provides features to cr
 ## **Installation and Setup**
 
 ### 1. Clone the repository
-- git clone [https://github.com/josephpeter231/fabheads-project.git](https://github.com/josephpeter231/fabheads-project.git)
-- cd blog_project
+- git clone [https://github.com/josephpeter231/Zeotap-AST](https://github.com/josephpeter231/Zeotap-AST)
 
-### 2. Install Dependencies
-- pip install django djangorestframework (either in virtual env or globally)
+### 2. Install Dependencies in terminal
+- pip install -r requirements.txt
 
-### 3. Run Migrations
-- python manage.py makemigrations
-- python manage.py migrate
 
-### 4. Create a Superuser
-- python manage.py createsuperuser (To view the admin Interface)
-
-### 5. Start the Server
-- python manage.py runserver 
-  (application can be accessed [http://127.0.0.1:8000/](http://127.0.0.1:8000/))
+### 3. Start the Server
+- python app.py (or) flask run
+  (application can be accessed [http://127.0.0.1:5000/](http://127.0.0.1:5000/))
 
 ## Application Features
 - **Blog Posts**
-  - **Create:** Navigate to `/posts/new/` and fill out the form to create a new post.
+  - **Create rule:** Use `/create_rule` to create a new rule with logical conditions.
   - **Read:** View all posts at `/posts/` or view a specific post at `/posts/<slug>/`.
   - **Update:** Edit a post you created by going to `/posts/<slug>/edit/`.
   - **Delete:** Delete a post by going to `/posts/<slug>/delete/`.
