@@ -51,6 +51,11 @@ The Rule Engine Application dynamically evaluates user eligibility based on attr
   - python manage.py migrate
   - python manage.py test (for running the testcases) -->
 ## Screenshots
+### Screenshot 1
+![Screenshot1](./screenshot/screenshot1.png)
+
+### Screenshot 2
+![Screenshot2](./screenshot/screenshot2.png)
  
   ![image](https://github.com/user-attachments/assets/44b294d6-feb0-442e-b106-00dde3479a7a)
 
