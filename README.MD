@@ -10,7 +10,7 @@ The Rule Engine Application dynamically evaluates user eligibility based on attr
 
 - Rule Creation : User will be able to add the rules.
 - Combine two or more rules.
-- Evaluate the rule 
+- Evaluate the rules. 
 - storage of each rule in database.
 
 ## **Technologies Used**
