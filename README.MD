@@ -28,10 +28,10 @@ The Rule Engine Application dynamically evaluates user eligibility based on attr
 ## **Installation and Setup**
 
 ### 1. Clone the repository
-- git clone [https://github.com/josephpeter231/Zeotap-AST](https://github.com/josephpeter231/Zeotap-AST)
+- `git clone [https://github.com/josephpeter231/Zeotap-AST](https://github.com/josephpeter231/Zeotap-AST)`
 
 ### 2. Install Dependencies in terminal
-- pip install -r requirements.txt
+- `pip install -r requirements.txt`
 
 
 ### 3. Start the Server
@@ -44,12 +44,17 @@ The Rule Engine Application dynamically evaluates user eligibility based on attr
   - **Combine Rules:** Combine multiple rules using `/combine_rules` (POST method).
   - **Evaluate Rule:** Evaluate a rule against user data through `/evaluate_rule`, returning whether the criteria are met (POST method).
 
-<!-- ## **Unit Tests**
-1. Model: Testing the creation of a post and ensuring slugs are generated correctly
-2. Only author can delete own post
-- To Run the unit tests run the following commands in terminal
-  - python manage.py migrate
-  - python manage.py test (for running the testcases) -->
+## **Evaluation of Rules**
+1. Select a rule that is created previously.
+2. Now give input in the form of json 
+   Testing for the rule `(salary > 50000 OR experience > 5)`
+   - `{
+    "age": 30,
+    "department": "Marketing",
+    "salary": 60000,
+    "experience": 6
+}
+`
 ## Screenshots
 ### Screenshot 1
 ![Screenshot1](./Screenshots/image.png)
