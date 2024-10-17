@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, jsonify
-from models import create_rule, combine_rules, evaluate_rule
+from models import create_rule, combine_rules, evaluate_ast, evaluate_rule
 from database import ast_to_string, dict_to_node, insert_rule, get_rule_by_id, get_all_rules, node_to_dict
 import logging
+
 from bson import ObjectId
 
 logging.basicConfig(level=logging.DEBUG)
@@ -62,15 +63,28 @@ def combine_rules_api():
 
 
 @app.route('/evaluate_rule', methods=['POST'])
-def evaluate_rule_api():
-    rule_id = request.form['rule_id']
-    user_data = request.json
-    rule_ast = get_rule_by_id(rule_id)
-    if rule_ast is None:
-        return jsonify({"error": "Rule not found"}), 404
+def evaluate_rule():
+    try:
+        data = request.json
+        rule_id = data['rule_id']
+        user_data = data['user_data']
 
-    result = evaluate_rule(rule_ast, user_data)
-    return jsonify({"result": result})
+        # Fetch the rule by ID from MongoDB
+        rule = mongo.db.rules.find_one({'_id': ObjectId(rule_id)})
+        if not rule:
+            return jsonify({'error': 'Rule not found'}), 404
+
+        # Get the AST (abstract syntax tree) of the rule
+        rule_ast = rule['ast']
+
+        # Evaluate the AST with the provided user data
+        result = evaluate_ast(rule_ast, user_data)
+
+        return jsonify({'result': result}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)

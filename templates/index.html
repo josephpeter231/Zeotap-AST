@@ -124,17 +124,23 @@
 
         // Form submission for evaluating a rule
         document.getElementById('evaluate-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const rule_id = document.getElementById('rule_id').value;
-            const user_data = document.getElementById('user_data').value;
-            const response = await fetch('/evaluate_rule', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ rule_id, user_data: JSON.parse(user_data) })
-            });
-            const data = await response.json();
-            alert('Evaluation Result: ' + data.result);
+    e.preventDefault();
+    const rule_id = document.getElementById('rule_id').value;
+    const user_data = document.getElementById('user_data').value;
+
+    try {
+        const response = await fetch('/evaluate_rule', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ rule_id, user_data: JSON.parse(user_data) })
         });
+        const data = await response.json();
+        alert('Evaluation Result: ' + data.result);
+    } catch (error) {
+        alert('Error evaluating the rule: ' + error.message);
+    }
+});
+
     </script>
 </body>
 

@@ -54,16 +54,40 @@ def dict_to_node(node_dict):
         right=dict_to_node(node_dict['right'])
     )
 
-def evaluate_rule(ast, data):
-    if ast.type == 'operator':
-        left_result = evaluate_rule(ast.left, data)
-        right_result = evaluate_rule(ast.right, data)
-        if ast.value == 'AND':
-            return left_result and right_result
-        elif ast.value == 'OR':
-            return left_result or right_result
-    elif ast.type == 'operand':
-        return evaluate_condition(ast.value, data)
+def evaluate_ast(node, user_data):
+    """
+    Recursively evaluates the AST (Abstract Syntax Tree) with the given user data.
+    
+    :param node: The AST node to evaluate.
+    :param user_data: A dictionary containing user data (e.g., {"age": 35, "salary": 60000}).
+    :return: The result of the evaluation (True or False).
+    """
+    if not node:
+        return False
+
+    # If the node is an operand, return its value from user_data
+    if node['type'] == 'operand':
+        return user_data.get(node['value'])
+
+    # If the node is an operator, evaluate its left and right children
+    if node['type'] == 'operator':
+        left_val = evaluate_ast(node['left'], user_data)
+        right_val = evaluate_ast(node['right'], user_data)
+
+        # Apply the operator
+        if node['value'] == '>':
+            return left_val > right_val
+        elif node['value'] == '<':
+            return left_val < right_val
+        elif node['value'] == '=':
+            return left_val == right_val
+        elif node['value'].lower() == 'and':
+            return left_val and right_val
+        elif node['value'].lower() == 'or':
+            return left_val or right_val
+
+    return False
+
 
 def tokenize(rule_string):
     tokens = rule_string.replace('(', ' ( ').replace(')', ' ) ').split()
