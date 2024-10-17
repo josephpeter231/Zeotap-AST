@@ -4,7 +4,7 @@ The Rule Engine Application dynamically evaluates user eligibility based on attr
 
 # Demonstration Video
 
-[Watch Video](Demo_video/demo.mp4)
+[Watch Video](/Screenshots/20241017-0937-18.1310155.mp4)
 
 ## **Features**
 
@@ -60,8 +60,8 @@ The Rule Engine Application dynamically evaluates user eligibility based on attr
 `{
     "age": 30,
     "department": "Marketing",
-    "salary": 60000,
-    "experience": 6
+    "salary": 0,
+    "experience": 0
   }
   `
   `Expected output : False`

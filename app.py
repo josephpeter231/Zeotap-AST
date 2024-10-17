@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
 from models import create_rule, combine_rules, evaluate_rule
-from database import ast_to_string, dict_to_node, insert_rule, get_rule_by_id, get_all_rules, node_to_dict
+from database import  insert_rule, get_rule_by_id, get_all_rules, node_to_dict
 import logging
 from bson import ObjectId
 
@@ -12,7 +12,6 @@ db = client.rule_engine_db
 
 @app.route('/')
 def index():
-    # Retrieve all created rules and send them to the frontend
     rules = get_all_rules()
     return render_template('index.html', rules=rules)
 
