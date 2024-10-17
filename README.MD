@@ -35,22 +35,22 @@ The Rule Engine Application dynamically evaluates user eligibility based on attr
 
 
 ### 3. Start the Server
-- python app.py (or) flask run
+- `python app.py` (or) `flask run`
   (application can be accessed [http://127.0.0.1:5000/](http://127.0.0.1:5000/))
 
 ## Application Features
-- **Blog Posts**
-  - **Create rule:** Use `/create_rule` to create a new rule with logical conditions.
-  - **Read:** View all posts at `/posts/` or view a specific post at `/posts/<slug>/`.
-  - **Update:** Edit a post you created by going to `/posts/<slug>/edit/`.
-  - **Delete:** Delete a post by going to `/posts/<slug>/delete/`.
+  - **Create rule:** Use `/create_rule` to create a new rule with logical conditions(POST method).
+  - **List Rules:**  View all created rules in Homepage .
+  - **Combine Rules:** Combine multiple rules using `/combine_rules` (POST method).
+  - **Evaluate Rule:** Evaluate a rule against user data through `/evaluate_rule`, returning whether the criteria are met (POST method).
 
-## **Unit Tests**
+<!-- ## **Unit Tests**
 1. Model: Testing the creation of a post and ensuring slugs are generated correctly
 2. Only author can delete own post
 - To Run the unit tests run the following commands in terminal
   - python manage.py migrate
-  - python manage.py test (for running the testcases)
+  - python manage.py test (for running the testcases) -->
+## Screenshots
  
   ![image](https://github.com/user-attachments/assets/44b294d6-feb0-442e-b106-00dde3479a7a)
 
