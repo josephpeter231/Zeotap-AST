@@ -32,13 +32,12 @@
     <!-- Display Combined Rule -->
     <h2>Combined Rule Output:</h2>
     <pre id="combined-rule-output"></pre>
-    
+
     <!-- Display Combined Rule as Expression -->
     <h2>Combined Rule Expression:</h2>
     <pre id="combined-rule-expression"></pre>
 
-    <!-- Evaluate Rule Form -->
-    <h2>Evaluate Rule</h2>
+
     <form id="evaluate-form">
         <label for="rule_id">Select Rule:</label>
         <select id="rule_id" name="rule_id" required>
@@ -50,6 +49,7 @@
         <textarea id="user_data" name="user_data" required></textarea>
         <button type="submit">Evaluate Rule</button>
     </form>
+
 
     <script>
         // AST to readable expression function
@@ -101,14 +101,14 @@
             const response = await fetch('/combine_rules', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ rule_ids: selectedRules }) 
+                body: JSON.stringify({ rule_ids: selectedRules })
             });
 
             const data = await response.json();
             if (response.ok) {
                 // Display the combined rule as JSON
                 const combinedRuleOutput = document.getElementById('combined-rule-output');
-                combinedRuleOutput.textContent = JSON.stringify(data.combined_rule, null, 2); 
+                combinedRuleOutput.textContent = JSON.stringify(data.combined_rule, null, 2);
 
                 // Convert AST to a readable expression and display it
                 const combinedRuleExpression = document.getElementById('combined-rule-expression');
@@ -123,23 +123,26 @@
         });
 
         // Form submission for evaluating a rule
-        document.getElementById('evaluate-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const rule_id = document.getElementById('rule_id').value;
-    const user_data = document.getElementById('user_data').value;
+       document.getElementById('evaluate-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-    try {
-        const response = await fetch('/evaluate_rule', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ rule_id, user_data: JSON.parse(user_data) })
+            const rule_id = document.getElementById('rule_id').value;
+            const user_data = document.getElementById('user_data').value;
+
+            const response = await fetch('/evaluate_rule', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    rule_id: rule_id,
+                    user_data: JSON.parse(user_data)  // Convert user_data from string to JSON object
+                })
+            });
+
+            const data = await response.json();
+            alert('Evaluation Result: ' + data.result);
+            console.log(data.result)
         });
-        const data = await response.json();
-        alert('Evaluation Result: ' + data.result);
-    } catch (error) {
-        alert('Error evaluating the rule: ' + error.message);
-    }
-});
+
 
     </script>
 </body>

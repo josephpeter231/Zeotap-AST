@@ -54,39 +54,41 @@ def dict_to_node(node_dict):
         right=dict_to_node(node_dict['right'])
     )
 
-def evaluate_ast(node, user_data):
-    """
-    Recursively evaluates the AST (Abstract Syntax Tree) with the given user data.
-    
-    :param node: The AST node to evaluate.
-    :param user_data: A dictionary containing user data (e.g., {"age": 35, "salary": 60000}).
-    :return: The result of the evaluation (True or False).
-    """
-    if not node:
-        return False
+def evaluate_rule(ast, data):
+    if ast['type'] == 'operand':
+        if isinstance(ast['value'], str) and ast['value'] in data:
+            return data[ast['value']]
+        return ast['value']
 
-    # If the node is an operand, return its value from user_data
-    if node['type'] == 'operand':
-        return user_data.get(node['value'])
+    left_value = evaluate_rule(ast['left'], data)
+    right_value = evaluate_rule(ast['right'], data)
 
-    # If the node is an operator, evaluate its left and right children
-    if node['type'] == 'operator':
-        left_val = evaluate_ast(node['left'], user_data)
-        right_val = evaluate_ast(node['right'], user_data)
+    if ast['type'] == 'operator':
+        operator = ast['value']
 
-        # Apply the operator
-        if node['value'] == '>':
-            return left_val > right_val
-        elif node['value'] == '<':
-            return left_val < right_val
-        elif node['value'] == '=':
-            return left_val == right_val
-        elif node['value'].lower() == 'and':
-            return left_val and right_val
-        elif node['value'].lower() == 'or':
-            return left_val or right_val
+        if left_value is None or right_value is None:
+            return False
+
+        if isinstance(left_value, str) and left_value.isdigit():
+            left_value = int(left_value)
+        if isinstance(right_value, str) and right_value.isdigit():
+            right_value = int(right_value)
+
+        if operator == '>':
+            return left_value > right_value
+        elif operator == '<':
+            return left_value < right_value
+        elif operator == '==':
+            return left_value == right_value
+        elif operator == '!=':
+            return left_value != right_value
+        elif operator == 'AND':
+            return bool(left_value) and bool(right_value)
+        elif operator == 'OR':
+            return bool(left_value) or bool(right_value)
 
     return False
+
 
 
 def tokenize(rule_string):

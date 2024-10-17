@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, jsonify
-from models import create_rule, combine_rules, evaluate_ast, evaluate_rule
+from pymongo import MongoClient
+from models import create_rule, combine_rules, evaluate_rule
 from database import ast_to_string, dict_to_node, insert_rule, get_rule_by_id, get_all_rules, node_to_dict
 import logging
-
 from bson import ObjectId
 
 logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__)
+client = MongoClient("mongodb+srv://josephpeterjece2021:AJ9Hg6xTtQBUCoGr@cluster1.xaacunv.mongodb.net/zeotap?retryWrites=true&w=majority")
+db = client.rule_engine_db
 
 @app.route('/')
 def index():
@@ -62,29 +64,26 @@ def combine_rules_api():
         return jsonify({'error': str(e)}), 500
 
 
+
+
 @app.route('/evaluate_rule', methods=['POST'])
-def evaluate_rule():
-    try:
-        data = request.json
-        rule_id = data['rule_id']
-        user_data = data['user_data']
+def evaluate_rule_api():
+    data = request.json  # Expecting JSON input
+    rule_id = data.get('rule_id')
+    user_data = data.get('user_data')
 
-        # Fetch the rule by ID from MongoDB
-        rule = mongo.db.rules.find_one({'_id': ObjectId(rule_id)})
-        if not rule:
-            return jsonify({'error': 'Rule not found'}), 404
+    # Retrieve the rule's AST from the database
+    rule = db.rules.find_one({'_id': ObjectId(rule_id)})
 
-        # Get the AST (abstract syntax tree) of the rule
-        rule_ast = rule['ast']
+    if not rule:
+        return jsonify({"error": "Rule not found"}), 404
 
-        # Evaluate the AST with the provided user data
-        result = evaluate_ast(rule_ast, user_data)
+    # Evaluate the rule
+    ast = rule.get('ast')  # Assuming you store the AST structure under 'ast'
+    result = evaluate_rule(ast, user_data)
 
-        return jsonify({'result': result}), 200
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
+    # Return the evaluation result as JSON
+    return jsonify({"result": result}), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
