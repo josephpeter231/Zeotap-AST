@@ -48,12 +48,15 @@ The Rule Engine Application dynamically evaluates user eligibility based on attr
 1. Select a rule that is created previously.
 2. Now give input in the form of json 
   - Testing for the rule `(salary > 50000 OR experience > 5)`
+  `
   {
-  "age": 30,
-  "department": "Marketing",
-  "salary": 60000,
-  "experience": 6
-}
+    "age": 30,
+    "department": "Marketing",
+    "salary": 60000,
+    "experience": 6
+  }
+
+  `
 
  
 ## Screenshots
