@@ -22,8 +22,7 @@ The Rule Engine Application dynamically evaluates user eligibility based on attr
 ## **Requirements**
 
 - Python 3.8 or later
-- Django 5.1 or the latest version
-- Django Rest Framework
+- Flask
 
 ## **Installation and Setup**
 
