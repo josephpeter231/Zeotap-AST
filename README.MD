@@ -27,7 +27,7 @@ The Rule Engine Application dynamically evaluates user eligibility based on attr
 ## **Installation and Setup**
 
 ### 1. Clone the repository
-- `git clone [https://github.com/josephpeter231/Zeotap-AST](https://github.com/josephpeter231/Zeotap-AST)`
+- `git clone https://github.com/josephpeter231/Zeotap-AST`
 
 ### 2. Install Dependencies in terminal
 - `pip install -r requirements.txt`
